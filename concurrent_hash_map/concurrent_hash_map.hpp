@@ -14,9 +14,8 @@
 #include <list>
 #include <vector>
 #include <type_traits>
-#include <experimental/optional>
-#include <boost/sync/mutexes.hpp>
-
+#include<optional>
+#include<shared_mutex>
 class unit_test_internals_view;
 
 namespace std {
@@ -447,7 +446,6 @@ namespace std {
                 counter = other.counter;
             }
             version_type read_lock() noexcept {
-                mutex.lock_shared();
             }
             bool try_read_unlock(version_type version) noexcept {
                 mutex.unlock_shared();
@@ -480,7 +478,8 @@ namespace std {
 
 
         private:
-            boost::sync::shared_spin_mutex mutex;
+
+            std::shared_mutex mutex;
             size_t counter;
         };
         
